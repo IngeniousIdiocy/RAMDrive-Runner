@@ -189,7 +189,7 @@ namespace RAMDrive_Runner
                 command = $"New-Item -ItemType Junction -Path '{selectedFolderPath}' -Value '{driveLetter}:\\{System.IO.Path.GetFileName(selectedFolderPath)}'";
                 ExecutePowerShellCommand(command);
 
-                // Enable the UnmountRestoreButton if there are no errors after execution.
+                // swap the enablement of the mount and unmount buttons if there are no errors after execution.
                 // This needs to be done on the main UI thread.
                 Dispatcher.Invoke(() =>
                 {
@@ -197,6 +197,8 @@ namespace RAMDrive_Runner
                     {
                         unmountRestoreButton.IsEnabled = true;
                         mountLinkButton.IsEnabled = false;
+                        // Disable the folderList so user cannot select another folder
+                        folderList.IsEnabled = false;
                     }
                 });
             });
@@ -250,13 +252,15 @@ namespace RAMDrive_Runner
                 command = $"imdisk -D -m {driveLetter}:";
                 ExecutePowerShellCommand(command);
 
-                // Modify UI elements after execution using the dispatcher
+                // swap enablement of mount and unmount after execution using the dispatcher
                 if (ErrorsAfterExecution() == 0)
                 {
                     Dispatcher.Invoke(() =>
                     {
                         unmountRestoreButton.IsEnabled = false;
                         mountLinkButton.IsEnabled = true;
+                        // enable the folderList so user cannot select another folder
+                        folderList.IsEnabled = true;
                     });
                 }
             });
@@ -323,7 +327,7 @@ namespace RAMDrive_Runner
             {
                 From = 0,
                 To = 360,
-                Duration = new Duration(TimeSpan.FromSeconds(1)),
+                Duration = new Duration(TimeSpan.FromSeconds(2)),
                 RepeatBehavior = RepeatBehavior.Forever
             };
             RotateTransform rt = new RotateTransform();
