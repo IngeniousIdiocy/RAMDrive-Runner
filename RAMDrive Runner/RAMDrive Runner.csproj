@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <None Remove="FolderIcon.ico" />
+    <None Remove="ramdisk.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -26,6 +27,7 @@
 
   <ItemGroup>
     <Resource Include="FolderIcon.ico" />
+    <Resource Include="ramdisk.ico" />
   </ItemGroup>
 
 </Project>

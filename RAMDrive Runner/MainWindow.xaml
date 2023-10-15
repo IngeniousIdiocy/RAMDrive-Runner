@@ -1,7 +1,7 @@
 ﻿<Window x:Class="RAMDrive_Runner.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="RAMDrive Runner" Height="600" Width="300" Background="#181b20">
+        Title="RAMDrive Runner" Height="600" Width="300" Icon="ramdisk.ico" Background="#181b20">
 
     <Grid Margin="10">
 
