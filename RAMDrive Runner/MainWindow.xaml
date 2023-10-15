@@ -50,24 +50,26 @@
         <!-- RAM Allocation Label -->
         <Label Name="ramSizeLabel" Content="{Binding ElementName=ramAllocationSlider, Path=Value, StringFormat=RAM Disk Size: {0}GB}" Foreground="White" FontWeight="Bold" Grid.Row="4" HorizontalAlignment="Center" />
 
-        <!-- Mount and Transfer Button -->
-        <Button Content="Mount, Copy and Link" Width="200" Margin="5,20" Grid.Row="5" Name="mountLinkButton" Click="OnMountCopyLink"/>
+        <!-- Mount and Unmount Image Buttons -->
+        <StackPanel Orientation="Horizontal" Grid.Row="5" Grid.RowSpan="2" HorizontalAlignment="Center">
+            <!-- Mount Image Button -->
+            <Image Name="mountImageButton" Source="pack://application:,,,/dalle3connect.ico" Width="125" Height="125"
+                MouseLeftButtonDown="OnMountImageButtonDown" MouseLeftButtonUp="OnMountImageButtonUp" MouseLeave="OnMountImageButtonLeave"
+                Margin="10,10,15,10"/>
+            <!-- Unmount Image Button -->
+            <Image Name="unmountImageButton" Source="pack://application:,,,/dalle3disconnect.ico" Width="125" Height="125"
+                MouseLeftButtonDown="OnUnmountImageButtonDown" MouseLeftButtonUp="OnUnmountImageButtonUp" MouseLeave="OnUnmountImageButtonLeave"
+                Margin="15,10,10,10" IsEnabled="False"/>
+        </StackPanel>
 
-        <!-- Unmount, Unlink and Restore Button -->
-        <Button Content="Unmount, Unlink and Restore" Width="200" Margin="5,20" Grid.Row="6" Name="unmountRestoreButton" Click="OnUnmountRestore" IsEnabled="False"/>
-
-        <!-- Overlay -->
-        <!-- Overlay -->
+        <!-- "Processing..."Overlay -->
         <Grid x:Name="overlayGrid" Background="#AA000000" Visibility="Collapsed" Grid.RowSpan="7" Grid.ColumnSpan="1">
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                 <TextBlock Text="Processing..." Foreground="White" FontSize="24" Margin="0,20,0,0" />
-
                 <!-- Icon -->
                 <Image x:Name="spinner" Width="150" Height="150" Source="pack://application:,,,/ramdiskcolor.ico"/>
-
             </StackPanel>
         </Grid>
-
 
     </Grid>
 </Window>

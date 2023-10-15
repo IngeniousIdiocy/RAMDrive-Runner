@@ -206,8 +206,8 @@ namespace RAMDrive_Runner
                 {
                     if (ErrorsAfterExecution() == 0)
                     {
-                        unmountRestoreButton.IsEnabled = true;
-                        mountLinkButton.IsEnabled = false;
+                        unmountImageButton.IsEnabled = true;
+                        mountImageButton.IsEnabled = false;
                         // Disable the folderList so user cannot select another folder
                         folderList.IsEnabled = false;
                     }
@@ -269,8 +269,8 @@ namespace RAMDrive_Runner
                 {
                     Dispatcher.Invoke(() =>
                     {
-                        unmountRestoreButton.IsEnabled = false;
-                        mountLinkButton.IsEnabled = true;
+                        unmountImageButton.IsEnabled = false;
+                        mountImageButton.IsEnabled = true;
                         // enable the folderList so user can select another folder
                         folderList.IsEnabled = true;
                     });
@@ -367,6 +367,50 @@ namespace RAMDrive_Runner
             spinner.RenderTransform = tt;
             spinner.RenderTransformOrigin = new Point(0.5, 0.5);
             tt.BeginAnimation(TranslateTransform.YProperty, da);
+        }
+
+        // Animation for the "pressed" effect
+        private void OnMountImageButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            var image = sender as Image;            
+            image.Margin = new Thickness(image.Margin.Left, image.Margin.Top + (image.Height * 0.20), image.Margin.Right, image.Margin.Bottom - (image.Height * 0.20));
+        }
+
+        private void OnMountImageButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            var image = sender as Image;
+            image.Margin = new Thickness(10, 10, 15, 10);  // reset margin
+
+            // Add code to perform the Mount functionality
+            OnMountCopyLink(sender, e);
+        }
+
+        private void OnMountImageButtonLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            var image = sender as Image;
+            image.Margin = new Thickness(10, 10, 15, 10);  // reset margin if mouse leaves without releasing button
+        }
+
+        // Similarly for the unmount button:
+        private void OnUnmountImageButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            var image = sender as Image;
+            image.Margin = new Thickness(image.Margin.Left, image.Margin.Top + (image.Height * 0.20), image.Margin.Right, image.Margin.Bottom - (image.Height * 0.20));
+        }
+
+        private void OnUnmountImageButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            var image = sender as Image;
+            image.Margin = new Thickness(15, 10, 10, 10);  // reset margin
+                                               
+            // Add code to perform the Unmount functionality
+            OnUnmountRestore(sender, e);
+        }
+
+        private void OnUnmountImageButtonLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            var image = sender as Image;
+            image.Margin = new Thickness(15, 10, 10, 10);  // reset margin if mouse leaves without releasing button
         }
 
     }

@@ -10,6 +10,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="connectRAMDrive.ico" />
+    <None Remove="dalle3connect.ico" />
+    <None Remove="dalle3disconnect.ico" />
+    <None Remove="disconnectRAMDrive.ico" />
     <None Remove="FolderIcon.ico" />
     <None Remove="ramdisk.ico" />
     <None Remove="ramdiskcolor.ico" />
@@ -27,6 +31,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="connectRAMDrive.ico" />
+    <Resource Include="dalle3connect.ico" />
+    <Resource Include="dalle3disconnect.ico" />
+    <Resource Include="disconnectRAMDrive.ico" />
     <Resource Include="FolderIcon.ico" />
     <Resource Include="ramdisk.ico" />
     <Resource Include="ramdiskcolor.ico" />
