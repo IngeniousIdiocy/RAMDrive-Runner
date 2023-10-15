@@ -1,7 +1,7 @@
 # RAMDrive-Runner
 I built this because I couldn't find a program that was as convenient as I wanted it to be.
 
-**This is dependent on ImDisk.**
+**This is dependent on ImDisk being installed and on the PATH**
 
 This program creates a RAMDisk with your selected game's files so they load much faster while you are in the game.
 
