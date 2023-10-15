@@ -1,20 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Forms; // Add this for the FolderBrowserDialog
 using System.IO;
-using System.Management.Automation;
 using System.Windows.Media.Animation;
 
 namespace RAMDrive_Runner
@@ -135,7 +128,8 @@ namespace RAMDrive_Runner
         {
             // Show overlay and start spinner animation on the main UI thread
             overlayGrid.Visibility = Visibility.Visible;
-            RotateSpinner();
+            //RotateSpinner();
+            BounceSpinner();
 
             string sourceDirectory = string.Empty;
             FolderDetail selectedFolder = null;
@@ -211,7 +205,8 @@ namespace RAMDrive_Runner
         {
             // Show overlay
             overlayGrid.Visibility = Visibility.Visible;
-            RotateSpinner();  // Assuming you have this function for the spinner rotation
+            //RotateSpinner();  // Assuming you have this function for the spinner rotation
+            BounceSpinner();
 
             await Task.Run(() =>
             {
@@ -259,7 +254,7 @@ namespace RAMDrive_Runner
                     {
                         unmountRestoreButton.IsEnabled = false;
                         mountLinkButton.IsEnabled = true;
-                        // enable the folderList so user cannot select another folder
+                        // enable the folderList so user can select another folder
                         folderList.IsEnabled = true;
                     });
                 }
@@ -334,6 +329,27 @@ namespace RAMDrive_Runner
             spinner.RenderTransform = rt;
             spinner.RenderTransformOrigin = new Point(0.5, 0.5);
             rt.BeginAnimation(RotateTransform.AngleProperty, da);
+        }
+
+        private void BounceSpinner()
+        {
+            // Define the distance you want the spinner to bounce, for example 30 units.
+            // Start from -15 (upward motion) and bounce to +15 (downward motion).
+            double bounceDistance = 220;
+
+            DoubleAnimation da = new DoubleAnimation
+            {
+                From = 0,
+                To = bounceDistance,
+                Duration = new Duration(TimeSpan.FromSeconds(.75)),
+                AutoReverse = true, // This will make the animation reverse and create the bounce effect.
+                RepeatBehavior = RepeatBehavior.Forever
+            };
+
+            TranslateTransform tt = new TranslateTransform();
+            spinner.RenderTransform = tt;
+            spinner.RenderTransformOrigin = new Point(0.5, 0.5);
+            tt.BeginAnimation(TranslateTransform.YProperty, da);
         }
 
     }

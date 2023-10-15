@@ -57,13 +57,13 @@
         <Button Content="Unmount, Unlink and Restore" Width="200" Margin="5,20" Grid.Row="6" Name="unmountRestoreButton" Click="OnUnmountRestore" IsEnabled="False"/>
 
         <!-- Overlay -->
-        <Grid x:Name="overlayGrid" Background="#AA000000" Visibility="Collapsed">
+        <Grid x:Name="overlayGrid" Background="#AA000000" Visibility="Collapsed" Grid.RowSpan="7" Grid.ColumnSpan="1">
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                 <TextBlock Text="Processing..." Foreground="White" FontSize="24" Margin="0,20,0,0" />
-                <Viewbox Width="300" Height="600">
+                <Viewbox Width="50" Height="50" HorizontalAlignment="Center" VerticalAlignment="Center">
                     <Path Name="spinner" Fill="White">
                         <Path.Data>
-                            <EllipseGeometry Center="150,50" RadiusX="50" RadiusY="50"/>
+                            <EllipseGeometry Center="25,25" RadiusX="25" RadiusY="25"/>
                         </Path.Data>
                     </Path>
                 </Viewbox>
