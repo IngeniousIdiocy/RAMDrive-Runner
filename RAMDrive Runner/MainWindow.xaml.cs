@@ -151,6 +151,7 @@ namespace RAMDrive_Runner
             string sourceDirectory = string.Empty;
             FolderDetail selectedFolder = null;
             double ramDiskSizeValue = 0;
+            double ramDiskSizeMax = 0;
 
             // Access UI elements on the main UI thread before starting the background task
             Dispatcher.Invoke(() =>
@@ -158,6 +159,7 @@ namespace RAMDrive_Runner
                 sourceDirectory = sourceDirectoryTextBox.Text;
                 selectedFolder = (FolderDetail)folderList.SelectedItem;
                 ramDiskSizeValue = ramAllocationSlider.Value;
+                ramDiskSizeMax = ramAllocationSlider.Maximum;
             });
 
             if (selectedFolder == null)
@@ -166,6 +168,19 @@ namespace RAMDrive_Runner
                 Dispatcher.Invoke(() =>
                 {
                     System.Windows.MessageBox.Show("No folder selected. Please select a folder before proceeding.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                });
+
+                // Hide overlay on the main UI thread
+                overlayGrid.Visibility = Visibility.Collapsed;
+                return;
+            }
+
+            if ((ramDiskSizeMax - ramDiskSizeValue) < 8)
+            {
+                // Show user error message on the main UI thread
+                Dispatcher.Invoke(() =>
+                {
+                    System.Windows.MessageBox.Show("You must leave at least 8 gigs of memory for Windows.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 });
 
                 // Hide overlay on the main UI thread
