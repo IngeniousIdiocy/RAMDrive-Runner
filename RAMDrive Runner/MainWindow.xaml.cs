@@ -9,6 +9,7 @@ using System.Windows.Media;
 using System.Windows.Forms; // Add this for the FolderBrowserDialog
 using System.IO;
 using System.Windows.Media.Animation;
+using System.Management;
 
 namespace RAMDrive_Runner
 {
@@ -27,6 +28,22 @@ namespace RAMDrive_Runner
         public MainWindow()
         {
             InitializeComponent();
+
+            // Get the total system RAM
+            long totalMemoryInBytes = 0;
+            ObjectQuery winQuery = new ObjectQuery("SELECT * FROM Win32_ComputerSystem");
+            ManagementObjectSearcher searcher = new ManagementObjectSearcher(winQuery);
+
+            foreach (ManagementObject item in searcher.Get())
+            {
+                totalMemoryInBytes = Convert.ToInt64(item["TotalPhysicalMemory"]);
+            }
+
+            // Convert bytes to gigabytes and set the maximum value of the slider
+            ramAllocationSlider.Maximum = totalMemoryInBytes / (1024 * 1024 * 1024);
+            int totalMemoryInGB = (int)(totalMemoryInBytes / (1024 * 1024 * 1024));
+            maxRAMLabel.Text = totalMemoryInGB.ToString()+"GB";
+
             sourceDirectoryTextBox.ToolTip = sourceDirectoryTextBox.Text;
             UpdateFolderList();
             ramSizeLabel.Content = $"RAM Disk Size: {ramAllocationSlider.Value}GB";
@@ -335,7 +352,7 @@ namespace RAMDrive_Runner
         {
             // Define the distance you want the spinner to bounce, for example 30 units.
             // Start from -15 (upward motion) and bounce to +15 (downward motion).
-            double bounceDistance = 220;
+            double bounceDistance = 100;
 
             DoubleAnimation da = new DoubleAnimation
             {

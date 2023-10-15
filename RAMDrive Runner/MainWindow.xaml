@@ -43,8 +43,8 @@
         <!-- RAM Allocation Slider with Context Labels -->
         <StackPanel Orientation="Horizontal" Margin="5,20" Grid.Row="3" HorizontalAlignment="Center">
             <TextBlock Text="0GB" VerticalAlignment="Center" Margin="5,0,5,0" Foreground="White" FontWeight="Bold"/>
-            <Slider Name="ramAllocationSlider" Minimum="0" Maximum="128" TickFrequency="1" IsSnapToTickEnabled="True" Width="180" ValueChanged="ramAllocationSlider_ValueChanged"/>
-            <TextBlock Text="128GB" VerticalAlignment="Center" Margin="5,0,5,0" Foreground="White" FontWeight="Bold"/>
+            <Slider Name="ramAllocationSlider" Minimum="0" Maximum="8" TickFrequency="1" IsSnapToTickEnabled="True" Width="180" ValueChanged="ramAllocationSlider_ValueChanged"/>
+            <TextBlock Name="maxRAMLabel" Text="8GB" VerticalAlignment="Center" Margin="5,0,5,0" Foreground="White" FontWeight="Bold"/>
         </StackPanel>
 
         <!-- RAM Allocation Label -->
@@ -63,7 +63,7 @@
                 <TextBlock Text="Processing..." Foreground="White" FontSize="24" Margin="0,20,0,0" />
 
                 <!-- Icon -->
-                <Image x:Name="spinner" Width="100" Height="100" Source="pack://application:,,,/ramdiskcolor.ico"/>
+                <Image x:Name="spinner" Width="150" Height="150" Source="pack://application:,,,/ramdiskcolor.ico"/>
 
             </StackPanel>
         </Grid>
