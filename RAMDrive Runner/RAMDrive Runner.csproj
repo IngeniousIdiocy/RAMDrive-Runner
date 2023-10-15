@@ -12,6 +12,7 @@
   <ItemGroup>
     <None Remove="FolderIcon.ico" />
     <None Remove="ramdisk.ico" />
+    <None Remove="ramdiskcolor.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -28,6 +29,7 @@
   <ItemGroup>
     <Resource Include="FolderIcon.ico" />
     <Resource Include="ramdisk.ico" />
+    <Resource Include="ramdiskcolor.ico" />
   </ItemGroup>
 
 </Project>

@@ -341,7 +341,7 @@ namespace RAMDrive_Runner
             {
                 From = 0,
                 To = bounceDistance,
-                Duration = new Duration(TimeSpan.FromSeconds(.75)),
+                Duration = new Duration(TimeSpan.FromSeconds(1)),
                 AutoReverse = true, // This will make the animation reverse and create the bounce effect.
                 RepeatBehavior = RepeatBehavior.Forever
             };
