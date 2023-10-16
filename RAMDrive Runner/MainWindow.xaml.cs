@@ -10,6 +10,7 @@ using System.Windows.Forms; // Add this for the FolderBrowserDialog
 using System.IO;
 using System.Windows.Media.Animation;
 using System.Management;
+using System.Windows.Threading;
 
 namespace RAMDrive_Runner
 {
@@ -25,6 +26,7 @@ namespace RAMDrive_Runner
     /// </summary>
     public partial class MainWindow : Window
     {
+        private DispatcherTimer _timer;
         public MainWindow()
         {
             InitializeComponent();
@@ -160,6 +162,12 @@ namespace RAMDrive_Runner
                 selectedFolder = (FolderDetail)folderList.SelectedItem;
                 ramDiskSizeValue = ramAllocationSlider.Value;
                 ramDiskSizeMax = ramAllocationSlider.Maximum;
+
+                // Initialize the timer for the progress bar
+                _timer = new DispatcherTimer();
+                _timer.Interval = TimeSpan.FromSeconds(.5); // Update 2x per second.
+                _timer.Tick += (s, e) => UpdateStorageProgress();
+                _timer.Start();
             });
 
             if (selectedFolder == null)
@@ -172,6 +180,14 @@ namespace RAMDrive_Runner
 
                 // Hide overlay on the main UI thread
                 overlayGrid.Visibility = Visibility.Collapsed;
+
+                // Stop the timer for the progress bar
+                if (_timer != null)
+                {
+                    _timer.Stop();
+                    _timer.Tick -= (s, e) => UpdateStorageProgress();
+                    _timer = null;
+                }
                 return;
             }
 
@@ -185,6 +201,14 @@ namespace RAMDrive_Runner
 
                 // Hide overlay on the main UI thread
                 overlayGrid.Visibility = Visibility.Collapsed;
+
+                // Stop the timer for the progress bar
+                if (_timer != null)
+                {
+                    _timer.Stop();
+                    _timer.Tick -= (s, e) => UpdateStorageProgress();
+                    _timer = null;
+                }
                 return;
             }
 
@@ -231,6 +255,14 @@ namespace RAMDrive_Runner
 
             // Hide overlay on the main UI thread
             overlayGrid.Visibility = Visibility.Collapsed;
+
+            // Stop the timer for the progress bar
+            if (_timer != null)
+            {
+                _timer.Stop();
+                _timer.Tick -= (s, e) => UpdateStorageProgress();
+                _timer = null;
+            }
         }
 
         private async void OnUnmountRestore(object sender, RoutedEventArgs e)
@@ -426,6 +458,31 @@ namespace RAMDrive_Runner
         {
             var image = sender as Image;
             image.Margin = new Thickness(15, 10, 10, 10);  // reset margin if mouse leaves without releasing button
+        }
+
+        private void UpdateStorageProgress()
+        {
+            try
+            {
+                DriveInfo driveZ = new DriveInfo("Z");
+                if (driveZ.IsReady)
+                {
+                    double totalSpace = driveZ.TotalSize;
+                    double freeSpace = driveZ.TotalFreeSpace;
+                    double usedSpace = totalSpace - freeSpace;
+
+                    double percentageUsed = ((usedSpace / totalSpace) * 100)+5;
+
+                    storageProgressBar.Value = percentageUsed;
+                } else
+                {
+                    storageProgressBar.Value = 0; //probably because Z hasn't been created yet.
+                }
+            }
+            catch
+            {
+                storageProgressBar.Value = 0; //probably because Z hasn't been created yet.
+            }
         }
 
     }
