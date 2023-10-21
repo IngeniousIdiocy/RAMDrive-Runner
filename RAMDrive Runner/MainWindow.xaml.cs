@@ -416,6 +416,7 @@ namespace RAMDrive_Runner
             tt.BeginAnimation(TranslateTransform.YProperty, da);
         }
 
+        //this is used as a "press" and "unpress" effect on the image buttons
         private void transformImage(Image image, double scale)
         {
             // Check if the image already has a ScaleTransform applied

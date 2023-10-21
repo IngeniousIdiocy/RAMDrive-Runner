@@ -6,6 +6,7 @@
     <RootNamespace>RAMDrive_Runner</RootNamespace>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+	<ApplicationIcon>ramdiskcolor.ico</ApplicationIcon>
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
 
@@ -37,7 +38,7 @@
     <Resource Include="disconnectRAMDrive.ico" />
     <Resource Include="FolderIcon.ico" />
     <Resource Include="ramdisk.ico" />
-    <Resource Include="ramdiskcolor.ico" />
+    <EmbeddedResource Include="ramdiskcolor.ico" />
   </ItemGroup>
 
 </Project>
