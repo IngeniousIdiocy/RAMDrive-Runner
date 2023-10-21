@@ -416,17 +416,33 @@ namespace RAMDrive_Runner
             tt.BeginAnimation(TranslateTransform.YProperty, da);
         }
 
+        private void transformImage(Image image, double scale)
+        {
+            // Check if the image already has a ScaleTransform applied
+            var scaleTransform = image.RenderTransform as ScaleTransform;
+
+            // If not, create one and set it as the image's RenderTransform
+            if (scaleTransform == null)
+            {
+                scaleTransform = new ScaleTransform(1, 1);
+                image.RenderTransform = scaleTransform;
+                image.RenderTransformOrigin = new Point(0.5, 0.5); // Set the transform origin to the center of the image
+            }
+
+            // Scale the image to specification which should be from 0 to 1
+            scaleTransform.ScaleX = scale;
+            scaleTransform.ScaleY = scale;
+        }
+
         // Animation for the "pressed" effect
         private void OnMountImageButtonDown(object sender, MouseButtonEventArgs e)
         {
-            var image = sender as Image;            
-            image.Margin = new Thickness(image.Margin.Left, image.Margin.Top + (image.Height * 0.20), image.Margin.Right, image.Margin.Bottom - (image.Height * 0.20));
+            transformImage(sender as Image, .8);
         }
 
         private void OnMountImageButtonUp(object sender, MouseButtonEventArgs e)
         {
-            var image = sender as Image;
-            image.Margin = new Thickness(10, 10, 15, 10);  // reset margin
+            transformImage(sender as Image, 1);
 
             // Add code to perform the Mount functionality
             OnMountCopyLink(sender, e);
@@ -434,30 +450,26 @@ namespace RAMDrive_Runner
 
         private void OnMountImageButtonLeave(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            var image = sender as Image;
-            image.Margin = new Thickness(10, 10, 15, 10);  // reset margin if mouse leaves without releasing button
+            transformImage(sender as Image, 1);
         }
 
         // Similarly for the unmount button:
         private void OnUnmountImageButtonDown(object sender, MouseButtonEventArgs e)
         {
-            var image = sender as Image;
-            image.Margin = new Thickness(image.Margin.Left, image.Margin.Top + (image.Height * 0.20), image.Margin.Right, image.Margin.Bottom - (image.Height * 0.20));
+            transformImage(sender as Image, .8);
         }
 
         private void OnUnmountImageButtonUp(object sender, MouseButtonEventArgs e)
         {
-            var image = sender as Image;
-            image.Margin = new Thickness(15, 10, 10, 10);  // reset margin
-                                               
+            transformImage(sender as Image, 1);
+
             // Add code to perform the Unmount functionality
             OnUnmountRestore(sender, e);
         }
 
         private void OnUnmountImageButtonLeave(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            var image = sender as Image;
-            image.Margin = new Thickness(15, 10, 10, 10);  // reset margin if mouse leaves without releasing button
+            transformImage(sender as Image, 1);
         }
 
         private void UpdateStorageProgress()

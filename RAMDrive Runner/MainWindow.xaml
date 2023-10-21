@@ -4,6 +4,31 @@
         Title="RAMDrive Runner" Height="600" Width="300" Icon="ramdiskcolor.ico" Background="#181b20"
         WindowStartupLocation="CenterScreen">
 
+    <!-- Add this section for a Dark Orange Slider style -->
+    <Window.Resources>
+        <!-- Slider Style -->
+        <Style x:Key="DarkOrangeSlider" TargetType="Slider">
+            <Setter Property="Foreground" Value="DarkOrange"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Slider">
+                        <Track x:Name="PART_Track">
+                            <Track.Thumb>
+                                <Thumb Background="DarkOrange"/>
+                            </Track.Thumb>
+                            <Track.DecreaseRepeatButton>
+                                <RepeatButton Background="DarkOrange"/>
+                            </Track.DecreaseRepeatButton>
+                            <Track.IncreaseRepeatButton>
+                                <RepeatButton />
+                            </Track.IncreaseRepeatButton>
+                        </Track>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
     <Grid Margin="10">
 
         <!-- Define rows -->
@@ -25,7 +50,7 @@
         </Grid.RowDefinitions>
 
         <!-- Source Directory Selection -->
-        <Label Content="Source Directory:" Foreground="White" FontWeight="Bold" Grid.Row="0"/>
+        <Label Content="Source Directory:" Foreground="DarkOrange" FontWeight="Bold" Grid.Row="0"/>
         <TextBox Name="sourceDirectoryTextBox" IsReadOnly="True" Grid.Row="1" Margin="5,5,5,20" Text="C:\Program Files (x86)\Steam\steamapps\common" PreviewMouseLeftButtonDown="SourceDirectoryTextBox_PreviewMouseLeftButtonDown"/>
 
         <!-- Folder Selection ListBox -->
@@ -43,13 +68,13 @@
 
         <!-- RAM Allocation Slider with Context Labels -->
         <StackPanel Orientation="Horizontal" Margin="5,20" Grid.Row="3" HorizontalAlignment="Center">
-            <TextBlock Text="0GB" VerticalAlignment="Center" Margin="5,0,5,0" Foreground="White" FontWeight="Bold"/>
-            <Slider Name="ramAllocationSlider" Minimum="0" Maximum="8" TickFrequency="1" IsSnapToTickEnabled="True" Width="180" ValueChanged="ramAllocationSlider_ValueChanged"/>
-            <TextBlock Name="maxRAMLabel" Text="8GB" VerticalAlignment="Center" Margin="5,0,5,0" Foreground="White" FontWeight="Bold"/>
+            <TextBlock Text="0GB" VerticalAlignment="Center" Margin="5,0,5,0" Foreground="DarkOrange" FontWeight="Bold"/>
+            <Slider Name="ramAllocationSlider" Minimum="0" Maximum="8" TickFrequency="1" IsSnapToTickEnabled="True" Width="180" ValueChanged="ramAllocationSlider_ValueChanged" Style="{StaticResource DarkOrangeSlider}"/>
+            <TextBlock Name="maxRAMLabel" Text="8GB" VerticalAlignment="Center" Margin="5,0,5,0" Foreground="DarkOrange" FontWeight="Bold"/>
         </StackPanel>
 
         <!-- RAM Allocation Label -->
-        <Label Name="ramSizeLabel" Content="{Binding ElementName=ramAllocationSlider, Path=Value, StringFormat=RAM Disk Size: {0}GB}" Foreground="White" FontWeight="Bold" Grid.Row="4" HorizontalAlignment="Center" />
+        <Label Name="ramSizeLabel" Content="{Binding ElementName=ramAllocationSlider, Path=Value, StringFormat=RAM Disk Size: {0}GB}" Foreground="DarkOrange" FontWeight="Bold" Grid.Row="4" HorizontalAlignment="Center" />
 
         <!-- Mount and Unmount Image Buttons -->
         <StackPanel Orientation="Horizontal" Grid.Row="5" Grid.RowSpan="2" HorizontalAlignment="Center">
@@ -66,10 +91,10 @@
         <!-- "Processing..."Overlay -->
         <Grid x:Name="overlayGrid" Background="#AA000000" Visibility="Collapsed" Grid.RowSpan="7" Grid.ColumnSpan="1">
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                <TextBlock Text="Processing..." Foreground="White" FontSize="24" Margin="0,20,0,0" />
+                <TextBlock Text="Processing..." Foreground="DarkOrange" FontSize="24" Margin="0,20,0,0" />
 
                 <!-- ProgressBar Added Here -->
-                <ProgressBar x:Name="storageProgressBar" Width="250" Height="20" Maximum="100" Margin="0,10"/>
+                <ProgressBar x:Name="storageProgressBar" Foreground="DarkOrange" Width="250" Height="20" Maximum="100" Margin="0,10"/>
 
                 <Image x:Name="spinner" Width="150" Height="150" Source="pack://application:,,,/ramdiskcolor.ico"/>
             </StackPanel>
